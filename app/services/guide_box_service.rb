@@ -18,9 +18,7 @@ class GuideBoxService
   end
 
   def get_streaming_data(movie)
-    movie_data = parse_response(get_full_movie_data(movie)
-    free_sources = movie_data.free_web_sources
-    paid_sources = movie_data.purchase_web_sources
+    movie.merge(construct_sources(parse_response(get_full_movie_data(movie))
   end 
 
   def parse_response(response)
@@ -32,5 +30,10 @@ class GuideBoxService
       3.times do 
         CGI.escape(name)
       end 
-    end 
+    end
+
+    def construct_sources(movie_data)
+      Hash.new(free_sources: movie_data.free_sources, 
+               paid_sources: movie_data.paid_sources)
+    end  
 end 
